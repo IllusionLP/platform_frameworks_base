@@ -3740,6 +3740,12 @@ public final class Settings {
          */
         public static final String NAVIGATION_BAR_TINT = "navigation_bar_tint";
 
+        /** Whether to show the brightness slider in quick settings panel.
+         *
+         * @hide
+         */
+        public static final String QS_SHOW_BRIGHTNESS_SLIDER = "qs_show_brightness_slider";
+
         /**
          * Settings to backup. This is here so that it's in the same place as the settings
          * keys and easy to update.
