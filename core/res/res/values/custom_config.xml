@@ -43,12 +43,6 @@
         <item>50</item>
     </integer-array>
 
-    <!-- The list of components which should be automatically disabled. -->
-    <string-array name="config_disabledComponents" translatable="false">
-    </string-array>
-
-    <!-- The list of components which should be forced to be enabled. -->
-    <string-array name="config_forceEnabledComponents" translatable="false">
-    </string-array>
-
+    <!-- kill app long press back -->
+    <integer name="config_backKillTimeout">1000</integer>
 </resources>
