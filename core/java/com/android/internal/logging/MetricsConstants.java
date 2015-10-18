@@ -264,6 +264,7 @@ public interface MetricsConstants {
     public static final int FUELGAUGE_INACTIVE_APPS = 238;
     public static final int OWLSNEST = 239;
     public static final int QS_LOCATION_DETAILS = 240;
+    public static final int QS_HEADSUP = 241;
 
     // Lock screen weather settings
     public static final int LOCKSCREEN_WEATHER_SETTINGS = 248;
