@@ -462,4 +462,8 @@ public class StatusBarIconController implements Tunable {
         }
         return ret;
     }
+
+    public int getCurrentVisibleNotificationIcons() {
+        return mNotificationIcons.getChildCount();
+    }
 }
