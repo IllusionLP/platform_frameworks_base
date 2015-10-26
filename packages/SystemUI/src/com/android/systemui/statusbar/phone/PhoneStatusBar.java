@@ -436,8 +436,6 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
 
         void observe() {
             ContentResolver resolver = mContext.getContentResolver();
-            mBlurRadius = Settings.System.getInt(resolver,
-                    Settings.System.LOCKSCREEN_BLUR_RADIUS, 14);
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.STATUS_BAR_CARRIER_LABEL_USE_CUSTOM),
                     false, this, UserHandle.USER_ALL);
@@ -527,6 +525,7 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.LOCKSCREEN_BLUR_RADIUS),
                     false, this, UserHandle.USER_ALL);
+            update();
         }
 
         @Override
@@ -606,7 +605,15 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
                     Settings.System.STATUS_BAR_NOTIFICATION_ICONS_COLOR))) {
                 updateNotificationIconColor();
             }
+            update();
         }
+    }
+
+    public void update() {
+            ContentResolver resolver = mContext.getContentResolver();
+
+            mBlurRadius = Settings.System.getInt(resolver,
+                    Settings.System.LOCKSCREEN_BLUR_RADIUS, 14);
     }
 
     private int mInteractingWindows;
