@@ -1979,6 +1979,9 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
     }
 
     private void updateCarrierLabelColor() {
+        if (!DeviceUtils.deviceSupportsMobileData(mContext)) {
+            return;
+        }
         final boolean show = Settings.System.getInt(
                 mContext.getContentResolver(),
                 Settings.System.STATUS_BAR_CARRIER_LABEL_SHOW, 0) == 1;
