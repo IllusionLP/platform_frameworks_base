@@ -645,10 +645,13 @@ public class StatusBarIconController implements Tunable {
                     mBatteryTextColorOld = StatusBarColorHelper.getBatteryTextColor(mContext);
                 } else if (mColorToChange == NETWORK_SIGNAL_COLOR) {
                     mNetworkSignalColorOld = mNetworkSignalColor;
+                    mNetworkSignalColorTint = mNetworkSignalColor;
                 } else if (mColorToChange == NO_SIM_COLOR) {
                     mNoSimColorOld = mNoSimColor;
+                    mNoSimColorTint = mNoSimColor;
                 } else if (mColorToChange == AIRPLANE_MODE_COLOR) {
                     mAirplaneModeColorOld = mAirplaneModeColor;
+                    mAirplaneModeColorTint = mAirplaneModeColor;
                 }
             }
         });
@@ -771,6 +774,9 @@ public class StatusBarIconController implements Tunable {
         mNetworkSignalColorOld = mNetworkSignalColor;
         mNoSimColorOld = mNoSimColor;
         mAirplaneModeColorOld = mAirplaneModeColor;
+        mNetworkSignalColorTint = mNetworkSignalColor;
+        mNoSimColorTint = mNoSimColor;
+        mAirplaneModeColorTint = mAirplaneModeColor;
 
         mSignalCluster.setIgnoreSystemUITuner(true);
         mSignalCluster.setIconTint(mNetworkSignalColor, mNoSimColor, mAirplaneModeColor, mDarkIntensity);
