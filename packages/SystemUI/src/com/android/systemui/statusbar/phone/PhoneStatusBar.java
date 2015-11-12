@@ -141,6 +141,7 @@ import com.android.systemui.statusbar.SpeedBumpView;
 import com.android.systemui.statusbar.StatusBarState;
 import com.android.systemui.statusbar.phone.UnlockMethodCache.OnUnlockMethodChangedListener;
 import com.android.systemui.statusbar.policy.AccessibilityController;
+import com.android.systemui.statusbar.policy.BatteryBar;
 import com.android.systemui.statusbar.policy.BatteryController;
 import com.android.systemui.statusbar.policy.BatteryController.BatteryStateChangeCallback;
 import com.android.systemui.statusbar.policy.BluetoothControllerImpl;
@@ -468,6 +469,12 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
                     Settings.System.STATUS_BAR_BATTERY_STATUS_SHOW_BATTERY),
                     false, this, UserHandle.USER_ALL);
             resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.STATUS_BAR_SHOW_BATTERY_BAR),
+                    false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.STATUS_BAR_SHOW_BATTERY_BAR_LOCK_SCREEN),
+                    false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.STATUS_BAR_BATTERY_STATUS_SHOW_TEXT),
                     false, this, UserHandle.USER_ALL);
             resolver.registerContentObserver(Settings.System.getUriFor(
@@ -545,6 +552,11 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
             } else if (uri.equals(Settings.System.getUriFor(
                     Settings.System.STATUS_BAR_BATTERY_STATUS_SHOW_BATTERY))) {
                 updateBatteryVisibility();
+            } else if (uri.equals(Settings.System.getUriFor(
+                    Settings.System.STATUS_BAR_SHOW_BATTERY_BAR))
+                || uri.equals(Settings.System.getUriFor(
+                    Settings.System.STATUS_BAR_SHOW_BATTERY_BAR_LOCK_SCREEN))) {
+                updateBatteryBarVisibility();
             } else if (uri.equals(Settings.System.getUriFor(
                     Settings.System.STATUS_BAR_BATTERY_STATUS_SHOW_TEXT))) {
                 updateBatteryTextVisibility();
@@ -1092,6 +1104,8 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
 
         mHeader.setBatteryController(mBatteryController);
         ((BatteryMeterView) mStatusBarView.findViewById(R.id.battery)).setBatteryController(
+                mBatteryController);
+        ((BatteryBar) mStatusBarView.findViewById(R.id.battery_bar)).setBatteryController(
                 mBatteryController);
         mKeyguardStatusBar.setBatteryController(mBatteryController);
         mHeader.setNextAlarmController(mNextAlarmController);
@@ -1998,6 +2012,7 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
         updateClockSettings();
         updateClockColor(false);
         updateBatteryVisibility();
+        updateBatteryBarVisibility();
         updateBatteryTextVisibility();
         updateShowChargeAnimation();
         updateCutOutBatteryText();
@@ -2084,6 +2099,16 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
                 Settings.System.STATUS_BAR_BATTERY_STATUS_SHOW_BATTERY, 1) == 1;
         if (mIconController != null) {
             mIconController.updateBatteryVisibility(show);
+        }
+    }
+
+    private void updateBatteryBarVisibility() {
+        final boolean show = Settings.System.getInt(mContext.getContentResolver(),
+                Settings.System.STATUS_BAR_SHOW_BATTERY_BAR, 0) == 1;
+        final boolean showOnKeyguard = Settings.System.getInt(mContext.getContentResolver(),
+                Settings.System.STATUS_BAR_SHOW_BATTERY_BAR_LOCK_SCREEN, 0) == 1;
+        if (mIconController != null) {
+            mIconController.updateBatteryBarVisibility(show, showOnKeyguard);
         }
     }
 
